@@ -1,0 +1,33 @@
+{
+  "name": "@digital-origin/eslint-config-digital-origin",
+  "version": "1.0.0",
+  "description": "Digital Origin's ESLint config, following our styleguide",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/digitalorigin/do-eslint"
+  },
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "config",
+    "digitalorigin",
+    "javascript",
+    "styleguide"
+  ],
+  "dependencies": {
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.1",
+    "in-publish": "^2.0.0"
+  },
+  "engines": {
+    "node": ">= 4"
+  }
+}
