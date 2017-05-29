@@ -36,6 +36,7 @@ module.exports = {
     'react/jsx-curly-spacing': 0,
     'react/jsx-indent': 0,
     'import/no-mutable-exports': 0,
+    'import/prefer-default-export': 0,
     'no-prototype-builtins': 0,
     'react/jsx-no-target-blank': 0,
     'no-underscore': 0,
