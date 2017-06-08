@@ -48,6 +48,7 @@ module.exports = {
     node: true,
     jasmine: true,
     es6: true,
+    jest: true,
   },
   settings: {
     'import/resolver': {
