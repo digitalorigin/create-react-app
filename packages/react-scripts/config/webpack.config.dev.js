@@ -21,7 +21,6 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const pmtCssPaths = require('@digital-origin/pmt-css').includePaths;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -87,7 +86,7 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: ['node_modules', paths.appNodeModules, paths.appSrc].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -139,7 +138,11 @@ module.exports = {
               formatter: eslintFormatter,
               // @remove-on-eject-begin
               baseConfig: {
-                extends: [require.resolve('@digital-origin/eslint-config-digital-origin')],
+                extends: [
+                  require.resolve(
+                    '@digital-origin/eslint-config-digital-origin'
+                  ),
+                ],
               },
               ignore: false,
               useEslintrc: false,
@@ -194,12 +197,8 @@ module.exports = {
         loader: require.resolve('babel-loader'),
         options: {
           // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          babelrc: true,
           // @remove-on-eject-end
-          // This is a feature of `babel-loader` for webpack (not Babel itself).
-          // It enables caching results in ./node_modules/.cache/babel-loader/
-          // directory for faster rebuilds.
           cacheDirectory: true,
         },
       },
@@ -241,7 +240,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         use: [
           require.resolve('style-loader'),
           {
@@ -256,6 +255,7 @@ module.exports = {
               // Necessary for external CSS imports to work
               // https://github.com/facebookincubator/create-react-app/issues/2677
               ident: 'postcss',
+              sourceMap: true,
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
                 autoprefixer({
@@ -271,11 +271,11 @@ module.exports = {
             },
           },
           {
-            loader: 'sass-loader',
+            loader: require.resolve('sass-loader'),
             options: {
               outputStyle: 'expanded',
               sourceMap: true,
-              includePaths: [].concat(pmtCssPaths),
+              includePaths: [].concat(paths.appSrc),
             },
           },
         ],

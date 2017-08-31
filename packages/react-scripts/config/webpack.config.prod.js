@@ -22,6 +22,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -86,7 +87,7 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: ['node_modules', paths.appNodeModules, paths.appSrc].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -140,7 +141,11 @@ module.exports = {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
+                extends: [
+                  require.resolve(
+                    '@digital-origin/eslint-config-digital-origin'
+                  ),
+                ],
               },
               ignore: false,
               useEslintrc: false,
@@ -164,6 +169,7 @@ module.exports = {
           /\.html$/,
           /\.(js|jsx)$/,
           /\.css$/,
+          /\.scss$/,
           /\.json$/,
           /\.bmp$/,
           /\.gif$/,
@@ -192,8 +198,7 @@ module.exports = {
         loader: require.resolve('babel-loader'),
         options: {
           // @remove-on-eject-begin
-          babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
+          babelrc: true,
           // @remove-on-eject-end
           compact: true,
         },
@@ -252,6 +257,57 @@ module.exports = {
         ),
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract(
+          Object.assign(
+            {
+              fallback: require.resolve('style-loader'),
+              use: [
+                {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    importLoaders: 1,
+                    minimize: true,
+                    sourceMap: true,
+                  },
+                },
+                {
+                  loader: require.resolve('postcss-loader'),
+                  options: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                    ident: 'postcss',
+                    sourceMap: true,
+                    plugins: () => [
+                      require('postcss-flexbugs-fixes'),
+                      autoprefixer({
+                        browsers: [
+                          '>1%',
+                          'last 4 versions',
+                          'Firefox ESR',
+                          'not ie < 9', // React doesn't support IE8 anyway
+                        ],
+                        flexbox: 'no-2009',
+                      }),
+                    ],
+                  },
+                },
+                {
+                  loader: require.resolve('sass-loader'),
+                  options: {
+                    outputStyle: 'expanded',
+                    sourceMap: true,
+                    includePaths: [].concat(paths.appSrc),
+                  },
+                },
+              ],
+            },
+            extractTextPluginOptions
+          )
+        ),
+        // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+      },
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "file" loader exclusion list.
     ],
@@ -279,6 +335,13 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
+      insertRollbar: false,
+      insertNewrelic: false,
+    }),
+    new RollbarSourceMapPlugin({
+      accessToken: process.env.ROLLBAR_TOKEN,
+      version: env.stringified['process.env'].VERSION,
+      publicPath: env.stringified['process.env'].PUBLIC_URL,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.

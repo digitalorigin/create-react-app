@@ -26,5 +26,8 @@
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
     ]
+  },
+  "dependencies": {
+    "git-rev-sync": "^1.9.1"
   }
 }

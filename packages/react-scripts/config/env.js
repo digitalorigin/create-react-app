@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
+const gitRev = require('git-rev-sync');
 
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
@@ -67,6 +68,20 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 // injected into the application via DefinePlugin in Webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
 
+function getLastGitMessage() {
+  return gitRev.message();
+}
+
+function getVersion() {
+  if (process.env.REACT_APP_ENV === 'production') {
+    return require(paths.appPackageJson).version;
+  }
+
+  return new Date().toLocaleString('es-ES', {
+    timeZone: 'Europe/Madrid',
+  });
+}
+
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
@@ -84,6 +99,8 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
+        VERSION: getVersion(),
+        LAST_GIT_MESSAGE: getLastGitMessage(),
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

@@ -30,6 +30,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/__tests__/**/*.js?(x)',
       '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     ],
+    moduleDirectories: [paths.appNodeModules, paths.appSrc],
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
