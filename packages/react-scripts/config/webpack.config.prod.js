@@ -59,7 +59,10 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
 const doPlugins = [];
 
 // Add rollbar only if react app env is production and we have rollbar token
-if (process.env.ROLLBAR_TOKEN && env.raw.REACT_APP_ENV === 'production') {
+if (
+  process.env.ROLLBAR_SERVER_TOKEN &&
+  env.raw.REACT_APP_ENV === 'production'
+) {
   doPlugins.push(
     new RollbarSourceMapPlugin({
       accessToken: process.env.ROLLBAR_SERVER_TOKEN,

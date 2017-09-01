@@ -98,7 +98,10 @@ function getClientEnvironment(publicUrl) {
         // For example, <img src={process.env.PUBLIC_URL + '/img/logo.png'} />.
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
+        REACT_APP_ENV: process.env.NODE_ENV || 'development', // default value same as node env
         PUBLIC_URL: publicUrl,
+        NEW_RELIC_APPLICATION_ID: process.env.NEW_RELIC_APPLICATION_ID,
+        ROLLBAR_CLIENT_TOKEN: process.env.ROLLBAR_CLIENT_TOKEN,
         VERSION: getVersion(),
         LAST_GIT_MESSAGE: getLastGitMessage(),
       }
