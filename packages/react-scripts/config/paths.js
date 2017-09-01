@@ -15,7 +15,7 @@ const fs = require('fs');
 const url = require('url');
 
 // Make sure any symlinks in the project folder are resolved:
-// https://github.com/facebookincubator/create-react-app/issues/637
+// https://github.com/facebookincubator/create-react-src/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
@@ -54,11 +54,11 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('app/index.js'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
-  appSrc: resolveApp('app'),
+  appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('app/setupTests.js'),
+  testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -74,11 +74,11 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('app/index.js'),
+  appIndexJs: resolveApp('src/index.js'),
   appPackageJson: resolveApp('package.json'),
-  appSrc: resolveApp('app'),
+  appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveApp('app/setupTests.js'),
+  testsSetup: resolveApp('src/setupTests.js'),
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
@@ -103,12 +103,12 @@ if (
     appPath: resolveApp('.'),
     appBuild: resolveOwn('../../build'),
     appPublic: resolveOwn('template/public'),
-    appHtml: resolveOwn('templatepublic/index.html'),
+    appHtml: resolveOwn('template/public/index.html'),
     appIndexJs: resolveOwn('template/src/index.js'),
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
-    testsSetup: resolveOwn('template/app/setupTests.js'),
+    testsSetup: resolveOwn('template/src/setupTests.js'),
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
