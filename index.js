@@ -53,7 +53,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        paths: ['app'],
+        paths: ['src'],
       },
     },
   },
