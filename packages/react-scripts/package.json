@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@digital-origin/eslint-config-digital-origin": "^3.0.0",
+    "@digital-origin/babel-preset-react-app": "^1.0.1-alpha.0",
     "autoprefixer": "7.1.1",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
