@@ -62,7 +62,7 @@ const doPlugins = [];
 if (process.env.ROLLBAR_TOKEN && env.raw.REACT_APP_ENV === 'production') {
   doPlugins.push(
     new RollbarSourceMapPlugin({
-      accessToken: process.env.ROLLBAR_TOKEN,
+      accessToken: process.env.ROLLBAR_SERVER_TOKEN,
       version: env.raw.VERSION,
       publicPath: env.raw.PUBLIC_URL,
     })
