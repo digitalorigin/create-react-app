@@ -55,6 +55,21 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
     { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
+// Start adding do custom webpack plugins
+const doPlugins = [];
+
+// Add rollbar only if react app env is production and we have rollbar token
+if (process.env.ROLLBAR_TOKEN && env.raw.REACT_APP_ENV === 'production') {
+  doPlugins.push(
+    new RollbarSourceMapPlugin({
+      accessToken: process.env.ROLLBAR_TOKEN,
+      version: env.raw.VERSION,
+      publicPath: env.raw.PUBLIC_URL,
+    })
+  );
+}
+// end adding do custom webpack plugins
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -338,11 +353,6 @@ module.exports = {
       insertRollbar: false,
       insertNewrelic: false,
     }),
-    new RollbarSourceMapPlugin({
-      accessToken: process.env.ROLLBAR_TOKEN,
-      version: env.stringified['process.env'].VERSION,
-      publicPath: env.stringified['process.env'].PUBLIC_URL,
-    }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
@@ -412,7 +422,7 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-  ],
+  ].concat(doPlugins),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
