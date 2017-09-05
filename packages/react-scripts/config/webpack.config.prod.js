@@ -57,7 +57,13 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   : {};
 
 // Start adding do custom webpack plugins
-const doPlugins = [];
+const doPlugins = [
+  new webpack.optimize.CommonsChunkPlugin({
+    children: true,
+    minChunks: 2,
+    async: true,
+  }),
+];
 
 // Add rollbar only if react app env is production and we have rollbar token
 if (
