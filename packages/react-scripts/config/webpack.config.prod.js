@@ -65,6 +65,7 @@ const doPlugins = [
     minChunks: 2,
     async: true,
   }),
+  new webpack.optimize.ModuleConcatenationPlugin(),
 ];
 
 // Add rollbar only if react app env is production and we have rollbar token
