@@ -20,6 +20,15 @@ const plugins = [
   ],
   // Transforms JSX
   [require.resolve('babel-plugin-transform-react-jsx')],
+  // Polyfills the runtime needed for async/await and generators
+  [
+    require.resolve('babel-plugin-transform-runtime'),
+    {
+      helpers: false,
+      polyfill: false,
+      regenerator: true,
+    },
+  ],
 ];
 
 // This is similar to how `env` works in Babel:
