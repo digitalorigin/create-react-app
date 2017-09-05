@@ -31,7 +31,6 @@
     ]
   },
   "dependencies": {
-    "git-rev-sync": "^1.9.1",
-    "webpack-bundle-analyzer": "^2.9.0"
+    "git-rev-sync": "^1.9.1"
   }
 }
