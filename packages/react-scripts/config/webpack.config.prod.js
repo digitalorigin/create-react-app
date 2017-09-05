@@ -23,7 +23,8 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -70,6 +71,10 @@ if (
       publicPath: env.raw.PUBLIC_URL,
     })
   );
+}
+
+if (process.env.ANALYZER) {
+  doPlugins.push(new BundleAnalyzerPlugin({ defaultSizes: 'gzip' }));
 }
 // end adding do custom webpack plugins
 
