@@ -30,6 +30,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/__tests__/**/*.js?(x)',
       '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
     ],
+    moduleDirectories: [paths.appNodeModules, paths.appSrc],
     testEnvironment: 'node',
     testURL: 'http://localhost',
     transform: {
@@ -43,7 +44,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
     },
-    moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx'],
+    moduleFileExtensions: ['web.js', 'js', 'json', 'web.jsx', 'jsx', 'node'],
   };
   if (rootDir) {
     config.rootDir = rootDir;

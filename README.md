@@ -239,11 +239,12 @@ Some of the more popular and actively maintained ones are:
 * [NYTimes/kyt](https://github.com/NYTimes/kyt)
 * [zeit/next.js](https://github.com/zeit/next.js)
 * [gatsbyjs/gatsby](https://github.com/gatsbyjs/gatsby)
+* [electrode-io/electrode](https://github.com/electrode-io/electrode)
 
 Notable alternatives also include:
 
 * [enclave](https://github.com/eanplatter/enclave)
-* [motion](https://github.com/motion/motion)
+* [motion](https://github.com/steelbrain/pundle/tree/master/packages/motion)
 * [quik](https://github.com/satya164/quik)
 * [sagui](https://github.com/saguijs/sagui)
 * [roc](https://github.com/rocjs/roc)
@@ -251,6 +252,7 @@ Notable alternatives also include:
 * [react-app](https://github.com/kriasoft/react-app)
 * [dev-toolkit](https://github.com/stoikerty/dev-toolkit)
 * [sku](https://github.com/seek-oss/sku)
+* [gluestick](https://github.com/TrueCar/gluestick)
 
 You can also use module bundlers like [webpack](http://webpack.js.org) and [Browserify](http://browserify.org/) directly.<br>
 React documentation includes [a walkthrough](https://facebook.github.io/react/docs/package-management.html) on this topic.

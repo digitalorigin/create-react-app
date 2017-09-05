@@ -132,6 +132,19 @@ module.exports = function(
     }
   }
 
+  // DO: Install additional do packages
+  const doArgs = args.slice();
+  doArgs.push(
+    '@digital-origin/pmt-css',
+    '@digital-origin/pmt-components',
+    '@digital-origin/eslint-config-digital-origin'
+  );
+  const doProc = spawn.sync(command, doArgs, { stdio: 'inherit' });
+  if (doProc.status !== 0) {
+    console.error('`' + command + ' ' + doArgs.join(' ') + '` failed');
+    return;
+  }
+
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
   // backward compatibility with old global-cli's.
