@@ -36,7 +36,7 @@ module.exports = {
     'import/first': 0,
     'global-require': 0,
     'react/jsx-curly-spacing': 0,
-    'react/jsx-indent-props': 0
+    'react/jsx-indent-props': 0,
     'react/jsx-closing-bracket-location': 0,
     'import/no-mutable-exports': 0,
     'import/prefer-default-export': 0,
