@@ -1,8 +1,10 @@
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
  *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  */
 'use strict';
 
@@ -79,6 +81,27 @@ if (env === 'test') {
     plugins: plugins.concat([
       // Compiles import() to a deferred require()
       require.resolve('babel-plugin-dynamic-import-node'),
+    ]),
+  };
+} else if (env === 'development') {
+  module.exports = {
+    presets: [
+      // ES features necessary for a faster development
+      [
+        require.resolve('babel-preset-env'),
+        {
+          targets: {
+            chrome: 61,
+          },
+          useBuiltIns: true,
+        },
+      ],
+      // JSX, Flow
+      require.resolve('babel-preset-react'),
+    ],
+    plugins: plugins.concat([
+      // Adds syntax support for import()
+      require.resolve('babel-plugin-syntax-dynamic-import'),
     ]),
   };
 } else {
