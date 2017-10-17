@@ -1,5 +1,5 @@
 module.exports = {
-  extends: 'airbnb',
+  extends: ['airbnb', 'prettier'],
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 6,
@@ -8,13 +8,14 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['react'],
+  plugins: ['react', 'prettier'],
   rules: {
-    indent: [
-      2,
-      2,
+    'prettier/prettier': [
+      'warn',
       {
-        SwitchCase: 1,
+        singleQuote: true,
+        trailingComma: 'all',
+        bracketSpacing: true,
       },
     ],
     'comma-dangle': [2, 'always-multiline'],
@@ -27,6 +28,7 @@ module.exports = {
     'max-len': 0,
     'newline-per-chained-call': 0,
     'react/jsx-filename-extension': 0,
+    'react/jsx-wrap-multilines': 0,
     'no-void': 0,
     'react/no-unescaped-entities': 0,
     'arrow-parens': 0,
@@ -34,7 +36,8 @@ module.exports = {
     'import/first': 0,
     'global-require': 0,
     'react/jsx-curly-spacing': 0,
-    'react/jsx-indent': 0,
+    'react/jsx-indent-props': 0
+    'react/jsx-closing-bracket-location': 0,
     'import/no-mutable-exports': 0,
     'import/prefer-default-export': 0,
     'no-prototype-builtins': 0,
