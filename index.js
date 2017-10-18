@@ -8,7 +8,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react'],
   rules: {
     'comma-dangle': [2, 'always-multiline'],
     'no-console': 0,
