@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb', 'prettier'],
+  extends: ['airbnb'],
   parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 6,
@@ -10,14 +10,6 @@ module.exports = {
   },
   plugins: ['react', 'prettier'],
   rules: {
-    'prettier/prettier': [
-      'warn',
-      {
-        singleQuote: true,
-        trailingComma: 'all',
-        bracketSpacing: true,
-      },
-    ],
     'comma-dangle': [2, 'always-multiline'],
     'no-console': 0,
     'react/prop-types': 1,
