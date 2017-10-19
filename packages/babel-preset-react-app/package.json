@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/babel-preset-react-app",
-  "version": "1.0.3-alpha.0",
+  "version": "1.0.3",
   "description": "Babel preset used by Create React App",
   "repository": "digitalorigin/create-react-app",
   "license": "MIT",
