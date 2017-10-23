@@ -47,6 +47,9 @@ module.exports = {
     'react/default-props-match-prop-types': 1,
     'no-restricted-globals': 1,
     'react/jsx-curly-brace-presence': 1,
+    'prefer-promise-reject-errors': 1,
+    'react/sort-comp': 1,
+    'spaced-comment': 1,
   },
   env: {
     browser: true,
