@@ -14,7 +14,7 @@ const filesToPrettify = process.argv.slice(2);
 const prettierProcess = spawn.sync(
   'prettier',
   [
-    '--trailing-coma',
+    '--trailing-comma',
     'all',
     '--single-quote',
     '--write',
