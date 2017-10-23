@@ -15,6 +15,7 @@
   },
   "packages": [
     "packages/react-scripts",
-    "packages/babel-preset-react-app"
+    "packages/babel-preset-react-app",
+    "packages/eslint-config-react-app"
   ]
 }
