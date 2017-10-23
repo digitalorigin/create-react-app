@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   extends: ['airbnb', 'prettier', 'prettier/react'],
   parser: 'babel-eslint',
@@ -40,6 +42,11 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/label-has-for': 0,
+    'react/no-unused-state': 1,
+    'prefer-destructuring': 1,
+    'react/default-props-match-prop-types': 1,
+    'no-restricted-globals': 1,
+    'react/jsx-curly-brace-presence': 1,
   },
   env: {
     browser: true,
