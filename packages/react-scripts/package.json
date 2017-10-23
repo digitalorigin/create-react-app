@@ -21,8 +21,8 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@digital-origin/babel-preset-react-app": "1.1.0-alpha.1f91ce20",
-    "@digital-origin/eslint-config-digital-origin": "4.0.0-alpha.cc279dcf",
+    "@digital-origin/babel-preset-react-app": "1.0.3",
+    "@digital-origin/eslint-config-digital-origin": "4.0.0-alpha.4",
     "autoprefixer": "7.1.2",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
