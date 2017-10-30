@@ -33,6 +33,7 @@ const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
+const rimraf = require('rimraf');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
@@ -60,6 +61,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // Start the webpack build
     return build(previousFileSizes);
   })
+  .then(buildResultData => removeSourceMaps(buildResultData))
   .then(
     ({ stats, previousFileSizes, warnings }) => {
       if (warnings.length) {
@@ -147,6 +149,12 @@ function build(previousFileSizes) {
         warnings: messages.warnings,
       });
     });
+  });
+}
+
+function removeSourceMaps(buildResultData) {
+  return new Promise(resolve => {
+    rimraf(`${paths.appBuild}/**/*.map`, () => resolve(buildResultData));
   });
 }
 
