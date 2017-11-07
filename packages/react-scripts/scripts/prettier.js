@@ -17,6 +17,8 @@ const prettierProcess = spawn.sync(
     '--trailing-comma',
     'all',
     '--single-quote',
+    '--print-width',
+    '100',
     '--write',
     '--',
     ...filesToPrettify,
