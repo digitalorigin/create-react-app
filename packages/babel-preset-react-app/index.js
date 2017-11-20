@@ -9,6 +9,8 @@
 'use strict';
 
 const plugins = [
+  // class { handleClick = () => { } }
+  require.resolve('babel-plugin-transform-class-properties'),
   // The following two plugins use Object.assign directly, instead of Babel's
   // extends helper. Note that this assumes `Object.assign` is available.
   // { ...todo, completed: true }
@@ -19,7 +21,12 @@ const plugins = [
     },
   ],
   // Transforms JSX
-  [require.resolve('babel-plugin-transform-react-jsx')],
+  [
+    require.resolve('babel-plugin-transform-react-jsx'),
+    {
+      useBuiltIns: true,
+    },
+  ],
   // Polyfills the runtime needed for async/await and generators
   [
     require.resolve('babel-plugin-transform-runtime'),
@@ -30,7 +37,6 @@ const plugins = [
     },
   ],
 ];
-
 // This is similar to how `env` works in Babel:
 // https://babeljs.io/docs/usage/babelrc/#env-option
 // We are not using `env` because it’s ignored in versions > babel-core@6.10.4:
@@ -100,6 +106,14 @@ if (env === 'test') {
       require.resolve('babel-preset-react'),
     ],
     plugins: plugins.concat([
+      // function* () { yield 42; yield 43; }
+      [
+        require.resolve('babel-plugin-transform-regenerator'),
+        {
+          // Async functions are converted to generators by babel-preset-env
+          async: false,
+        },
+      ],
       // Adds syntax support for import()
       require.resolve('babel-plugin-syntax-dynamic-import'),
     ]),
@@ -116,13 +130,24 @@ if (env === 'test') {
             ios: 10,
             android: '4.2',
           },
-          useBuiltIns: true,
+          // Disable polyfill transforms
+          useBuiltIns: false,
+          // Do not transform modules to CJS
+          modules: false,
         },
       ],
       // JSX, Flow
       require.resolve('babel-preset-react'),
     ],
     plugins: plugins.concat([
+      // function* () { yield 42; yield 43; }
+      [
+        require.resolve('babel-plugin-transform-regenerator'),
+        {
+          // Async functions are converted to generators by babel-preset-env
+          async: false,
+        },
+      ],
       // Adds syntax support for import()
       require.resolve('babel-plugin-syntax-dynamic-import'),
     ]),
