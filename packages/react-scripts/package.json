@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/react-scripts",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@digital-origin/babel-preset-react-app": "^1.1.0",
+    "@digital-origin/babel-preset-react-app": "^1.1.1",
     "@digital-origin/eslint-config-digital-origin": "^3.2.0",
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
