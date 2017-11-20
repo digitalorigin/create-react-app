@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/eslint-config-digital-origin",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Digital Origin's ESLint config, following our styleguide",
   "repository": "digitalorigin/create-react-app",
   "main": "index.js",
