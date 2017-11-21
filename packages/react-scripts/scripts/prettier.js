@@ -9,7 +9,7 @@ process.on('unhandledRejection', err => {
 
 const spawn = require('react-dev-utils/crossSpawn');
 
-const filesToPrettify = process.argv.slice(2);
+const stagedFiles = process.argv.slice(2);
 
 const prettierProcess = spawn.sync(
   'prettier',
@@ -21,7 +21,7 @@ const prettierProcess = spawn.sync(
     '100',
     '--write',
     '--',
-    ...filesToPrettify,
+    ...stagedFiles,
   ],
   {
     stdio: 'inherit',
@@ -33,7 +33,9 @@ if (prettierProcess.status !== 0) {
   return;
 }
 
-const gitAddProcess = spawn.sync('git', ['add'], { stdio: 'inherit' });
+const gitAddProcess = spawn.sync('git', ['add', ...stagedFiles], {
+  stdio: 'inherit',
+});
 
 if (gitAddProcess.status !== 0) {
   console.error('git add, Failed');
