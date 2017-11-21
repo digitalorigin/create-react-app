@@ -89,35 +89,6 @@ if (env === 'test') {
       require.resolve('babel-plugin-dynamic-import-node'),
     ]),
   };
-} else if (env === 'development') {
-  module.exports = {
-    presets: [
-      // ES features necessary for a faster development
-      [
-        require.resolve('babel-preset-env'),
-        {
-          targets: {
-            chrome: 61,
-          },
-          useBuiltIns: true,
-        },
-      ],
-      // JSX, Flow
-      require.resolve('babel-preset-react'),
-    ],
-    plugins: plugins.concat([
-      // function* () { yield 42; yield 43; }
-      [
-        require.resolve('babel-plugin-transform-regenerator'),
-        {
-          // Async functions are converted to generators by babel-preset-env
-          async: false,
-        },
-      ],
-      // Adds syntax support for import()
-      require.resolve('babel-plugin-syntax-dynamic-import'),
-    ]),
-  };
 } else {
   module.exports = {
     presets: [
