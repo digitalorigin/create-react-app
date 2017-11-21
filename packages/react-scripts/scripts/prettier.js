@@ -33,9 +33,9 @@ if (prettierProcess.status !== 0) {
   return;
 }
 
-const gitAddProcess = spawn.sync('git', ['add', '.'], { stdio: 'inherit' });
+const gitAddProcess = spawn.sync('git', ['add'], { stdio: 'inherit' });
 
 if (gitAddProcess.status !== 0) {
-  console.error('prettier, Failed');
+  console.error('git add, Failed');
   return;
 }
