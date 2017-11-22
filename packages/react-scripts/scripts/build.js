@@ -61,7 +61,12 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // Start the webpack build
     return build(previousFileSizes);
   })
-  .then(buildResultData => removeSourceMaps(buildResultData))
+  .then(
+    buildResultData =>
+      process.env.REACT_APP_ENV === 'production'
+        ? removeSourceMaps(buildResultData)
+        : Promise.resolve(buildResultData)
+  )
   .then(
     ({ stats, previousFileSizes, warnings }) => {
       if (warnings.length) {
