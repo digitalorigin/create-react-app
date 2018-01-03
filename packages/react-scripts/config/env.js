@@ -101,6 +101,7 @@ function getClientEnvironment(publicUrl) {
         NEW_RELIC_APPLICATION_ID: process.env.NEW_RELIC_APPLICATION_ID,
         ROLLBAR_CLIENT_TOKEN: process.env.ROLLBAR_CLIENT_TOKEN,
         HOTJAR_ID: process.env.HOTJAR_ID,
+        GTM_ID: process.env.GTM_ID,
         VERSION: getVersion(),
         LAST_GIT_MESSAGE: getLastGitMessage(),
       }
