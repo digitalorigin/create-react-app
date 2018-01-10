@@ -1,11 +1,8 @@
 # This a Create React App fork
 
-Some of the rules you have to follow when using this fork are:
+If you do a major version of this project open an issue to projects using it and provide instructions on how to do the upgrade
 
-- If you do a major version of this project open an issue to projects using it and provide instructions on how to do the upgrade
-- 
-
-Now up next the original Create React App Readme
+Now up next the original Create React App readme
 
 ---
 
