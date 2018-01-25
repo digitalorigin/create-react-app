@@ -80,6 +80,13 @@ function getVersion() {
   });
 }
 
+function buildGTMExtraParams(...params) {
+  return params.reduce(
+    (prev, [key, value]) => (value ? `${prev}&${key}=${value}` : prev),
+    ''
+  );
+}
+
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
@@ -101,6 +108,10 @@ function getClientEnvironment(publicUrl) {
         NEW_RELIC_APPLICATION_ID: process.env.NEW_RELIC_APPLICATION_ID,
         ROLLBAR_CLIENT_TOKEN: process.env.ROLLBAR_CLIENT_TOKEN,
         GTM_ID: process.env.GTM_ID,
+        GTM_EXTRA_URL_PARAMS: buildGTMExtraParams(
+          ['gtm_auth', process.env.GTM_AUTH],
+          ['gtm_preview', process.env.GTM_PREVIEW]
+        ),
         VERSION: getVersion(),
         LAST_GIT_MESSAGE: getLastGitMessage(),
       }
