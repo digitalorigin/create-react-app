@@ -11,6 +11,14 @@ const fs = require('fs');
 const chalk = require('chalk');
 const paths = require('../../config/paths');
 
+const includePrefixes = [];
+
+includePrefixes.unshift('@digital-origin/do-component-');
+
+const transformIgnorePattern = `[/\\\\]node_modules[/\\\\](?!${includePrefixes.join(
+  '|'
+)}).+\\.(js|jsx|mjs)$`;
+
 module.exports = (resolve, rootDir, isEjecting) => {
   // Use this instead of `paths.testsSetup` to avoid putting
   // an absolute filename into configuration after ejecting.
@@ -40,7 +48,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
         'config/jest/fileTransform.js'
       ),
     },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$'],
+    transformIgnorePatterns: [transformIgnorePattern],
     moduleNameMapper: {
       '^react-native$': 'react-native-web',
     },
