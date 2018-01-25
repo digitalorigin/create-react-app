@@ -3,6 +3,7 @@
 If you do a major version of this project open an issue to projects using it and provide instructions on how to do the upgrade
 
 Extra environments added:
+
 | env | useful for |
 | ------------- | ----------- |
 | NEW_RELIC_APPLICATION_ID | New Relic application id |
