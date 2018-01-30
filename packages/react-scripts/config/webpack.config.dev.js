@@ -30,6 +30,18 @@ const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
+let extraSassLoaders = [];
+if (process.env.PATHS_TO_SASS_RESOURCES_TO_INJECT) {
+  extraSassLoaders.push({
+    loader: require.resolve('sass-resources-loader'),
+    options: {
+      resources: process.env.PATHS_TO_SASS_RESOURCES_TO_INJECT
+        .split(' ')
+        .map(sassPath => path.resolve(paths.appPath, sassPath)),
+    },
+  });
+}
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -258,6 +270,7 @@ module.exports = {
                   includePaths: [].concat(paths.appSrc),
                 },
               },
+              ...extraSassLoaders,
             ],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.

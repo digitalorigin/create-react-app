@@ -83,6 +83,19 @@ if (
 if (process.env.ANALYZER) {
   doPlugins.push(new BundleAnalyzerPlugin({ defaultSizes: 'gzip' }));
 }
+
+let extraSassLoaders = [];
+if (process.env.PATHS_TO_SASS_RESOURCES_TO_INJECT) {
+  extraSassLoaders.push({
+    loader: require.resolve('sass-resources-loader'),
+    options: {
+      resources: process.env.PATHS_TO_SASS_RESOURCES_TO_INJECT
+        .split(' ')
+        .map(sassPath => path.resolve(paths.appPath, sassPath)),
+    },
+  });
+}
+
 // end adding do custom webpack plugins
 
 // This is the production configuration.
@@ -324,6 +337,7 @@ module.exports = {
                         includePaths: [].concat(paths.appSrc),
                       },
                     },
+                    ...extraSassLoaders,
                   ],
                 },
                 extractTextPluginOptions
