@@ -11,6 +11,7 @@ Extra environments added:
 | GTM_ID | Google Tag Manager container Id |
 | GTM_AUTH | Google Tag Manager authorization token (useful form multiple environments in GTM) |
 | GTM_PREVIEW | Google Tag Manager env preview (useful form multiple environments in GTM) |
+| PATHS_TO_SASS_RESOURCES_TO_INJECT | Path/s from app directory where to find sass resources to inject in every sass file (```./src/my/resource._scss ./src/my/other/resource.scss ```) |
 
 Now up next the original Create React App readme
 
