@@ -31,11 +31,11 @@ const publicUrl = '';
 const env = getClientEnvironment(publicUrl);
 
 let extraSassLoaders = [];
-if (process.env.PATHS_TO_SASS_RESOURCES_TO_INJECT) {
+if (process.env.SASS_RESOURCES_TO_INJECT) {
   extraSassLoaders.push({
     loader: require.resolve('sass-resources-loader'),
     options: {
-      resources: process.env.PATHS_TO_SASS_RESOURCES_TO_INJECT
+      resources: process.env.SASS_RESOURCES_TO_INJECT
         .split(' ')
         .map(sassPath => path.resolve(paths.appPath, sassPath)),
     },
