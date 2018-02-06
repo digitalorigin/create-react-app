@@ -173,8 +173,13 @@ module.exports = {
       // TODO: Disable require.ensure as it's not a standard language feature.
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
-
-      // First, run the linter.
+      // First Comment unneeded code with Conditional Loader
+      {
+        test: /\.(js|jsx|mjs)$/,
+        include: [paths.appSrc, paths.doComponentModulesRegex],
+        loader: require.resolve('webpack-conditional-loader'),
+      },
+      // Run the linter.
       // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|jsx|mjs)$/,
@@ -292,12 +297,6 @@ module.exports = {
             ),
 
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-          },
-          // Process JS with Conditional Loader.
-          {
-            test: /\.(js|jsx|mjs)$/,
-            include: [paths.appSrc, paths.doComponentModulesRegex],
-            loader: require.resolve('webpack-conditional-loader'),
           },
           {
             test: /\.scss$/,
