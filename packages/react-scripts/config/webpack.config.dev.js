@@ -231,6 +231,12 @@ module.exports = {
               },
             ],
           },
+          // Process JS with Conditional Loader.
+          {
+            test: /\.(js|jsx|mjs)$/,
+            include: [paths.appSrc, paths.doComponentModulesRegex],
+            loader: require.resolve('webpack-conditional-loader'),
+          },
           {
             test: /\.scss$/,
             use: [
