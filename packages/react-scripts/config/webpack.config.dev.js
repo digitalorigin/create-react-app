@@ -133,7 +133,7 @@ module.exports = {
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
       // Process JS with Conditional Loader.
-      // First Comment unneeded code with Conditional Loader
+      // First Comment unneeded marked code with Conditional Loader
       {
         test: /\.(js|jsx|mjs)$/,
         include: [paths.appSrc, paths.doComponentModulesRegex],
