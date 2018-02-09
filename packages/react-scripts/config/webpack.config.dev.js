@@ -136,6 +136,7 @@ module.exports = {
       // First Comment unneeded marked code with Conditional Loader
       {
         test: /\.(js|jsx|mjs)$/,
+        enforce: 'pre',
         include: [paths.appSrc, paths.doComponentModulesRegex],
         loader: require.resolve('webpack-conditional-loader'),
       },
