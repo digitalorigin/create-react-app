@@ -1,5 +1,5 @@
 {
-  "version": "1.2.2",
+  "version": "1.2.3",
   "name": "@digital-origin/babel-preset-react-app",
   "description": "Babel preset used by Create React App",
   "repository": "digitalorigin/create-react-app",
