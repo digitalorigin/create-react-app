@@ -23,6 +23,8 @@ const getClientEnvironment = require('./env');
 const RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
+const PreloadCSSPlugin = require('../plugins/preloadCssWebpack');
+
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -82,6 +84,11 @@ if (
 
 if (process.env.ANALYZER) {
   doPlugins.push(new BundleAnalyzerPlugin({ defaultSizes: 'gzip' }));
+}
+
+if (process.env.PRELOAD_CSS) {
+  // This will preload all the css found in the project
+  doPlugins.push(new PreloadCSSPlugin());
 }
 
 let extraSassLoaders = [];
@@ -396,8 +403,6 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
-      insertRollbar: false,
-      insertNewrelic: false,
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.

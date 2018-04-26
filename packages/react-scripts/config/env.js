@@ -115,6 +115,7 @@ function getClientEnvironment(publicUrl) {
           ['gtm_auth', process.env.GTM_AUTH],
           ['gtm_preview', process.env.GTM_PREVIEW]
         ),
+        PRELOAD_CSS: process.env.PRELOAD_CSS,
         VERSION: getVersion(),
         LAST_GIT_MESSAGE: getLastGitMessage(),
       }

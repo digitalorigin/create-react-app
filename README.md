@@ -12,6 +12,7 @@ Extra environments added:
 | GTM_AUTH | Google Tag Manager authorization token (useful form multiple environments in GTM) |
 | GTM_PREVIEW | Google Tag Manager env preview (useful form multiple environments in GTM) |
 | SASS_RESOURCES_TO_INJECT | Path/s File/s from app directory where to find sass resources to inject in every sass file (```./src/my/resource._scss ./src/my/other/resource.scss ```) |
+| PRELOAD_CSS | This enables the preloading of all css |
 
 Now up next the original Create React App readme
 
