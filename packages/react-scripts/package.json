@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "@digital-origin/react-scripts",
   "version": "3.5.0",
-=======
-  "name": "react-scripts",
-  "version": "1.1.4",
->>>>>>> dfbc71ce2ae07547a8544cce14a1a23fac99e071
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
