@@ -286,7 +286,7 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           {
-            test: /\.scss$/,
+            test: /\.modules\.scss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -296,6 +296,7 @@ module.exports = {
                       loader: require.resolve('css-loader'),
                       options: {
                         importLoaders: 1,
+                        modules: true,
                         minimize: true,
                         sourceMap: true,
                       },
@@ -338,7 +339,7 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           {
-            test: /\.modules\.scss$/,
+            test: /\.scss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -348,7 +349,6 @@ module.exports = {
                       loader: require.resolve('css-loader'),
                       options: {
                         importLoaders: 1,
-                        modules: true,
                         minimize: true,
                         sourceMap: true,
                       },

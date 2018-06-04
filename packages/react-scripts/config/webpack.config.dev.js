@@ -231,13 +231,15 @@ module.exports = {
             ],
           },
           {
-            test: /\.scss$/,
+            test: /\.module\.scss$/,
             use: [
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[name]_[local]__[hash:base64:5]',
                 },
               },
               {
@@ -273,15 +275,13 @@ module.exports = {
             ],
           },
           {
-            test: /\.module\.scss$/,
+            test: /\.scss$/,
             use: [
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
-                  modules: true,
-                  localIdentName: '[name]_[local]__[hash:base64:5]',
                 },
               },
               {
