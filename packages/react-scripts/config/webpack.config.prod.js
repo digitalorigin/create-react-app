@@ -21,8 +21,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -67,10 +66,7 @@ const doPlugins = [
 ];
 
 // Add rollbar only if react app env is production and we have rollbar token
-if (
-  process.env.ROLLBAR_SERVER_TOKEN &&
-  env.raw.REACT_APP_ENV === 'production'
-) {
+if (process.env.ROLLBAR_SERVER_TOKEN && env.raw.REACT_APP_ENV === 'production') {
   doPlugins.push(
     new RollbarSourceMapPlugin({
       accessToken: process.env.ROLLBAR_SERVER_TOKEN,
@@ -89,9 +85,9 @@ if (process.env.SASS_RESOURCES_TO_INJECT) {
   extraSassLoaders.push({
     loader: require.resolve('sass-resources-loader'),
     options: {
-      resources: process.env.SASS_RESOURCES_TO_INJECT
-        .split(' ')
-        .map(sassPath => path.resolve(paths.appPath, sassPath)),
+      resources: process.env.SASS_RESOURCES_TO_INJECT.split(' ').map(sassPath =>
+        path.resolve(paths.appPath, sassPath)
+      ),
     },
   });
 }
@@ -124,9 +120,7 @@ module.exports = {
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
-      path
-        .relative(paths.appSrc, info.absoluteResourcePath)
-        .replace(/\\/g, '/'),
+      path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -150,9 +144,7 @@ module.exports = {
       // It usually still works on npm 3 without this but it would be
       // unfortunate to rely on, as react-scripts could be symlinked,
       // and thus babel-runtime might not be resolvable from the source.
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
-      ),
+      'babel-runtime': path.dirname(require.resolve('babel-runtime/package.json')),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -194,11 +186,7 @@ module.exports = {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
-                extends: [
-                  require.resolve(
-                    '@digital-origin/eslint-config-digital-origin'
-                  ),
-                ],
+                extends: [require.resolve('@digital-origin/eslint-config-digital-origin')],
               },
               ignore: false,
               useEslintrc: false,
@@ -232,9 +220,7 @@ module.exports = {
             options: {
               // @remove-on-eject-begin
               babelrc: false,
-              presets: [
-                require.resolve('@digital-origin/babel-preset-react-app'),
-              ],
+              presets: [require.resolve('@digital-origin/babel-preset-react-app')],
               // @remove-on-eject-end
               compact: true,
             },
@@ -310,6 +296,59 @@ module.exports = {
                       loader: require.resolve('css-loader'),
                       options: {
                         importLoaders: 1,
+                        minimize: true,
+                        sourceMap: true,
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: {
+                        // Necessary for external CSS imports to work
+                        // https://github.com/facebookincubator/create-react-app/issues/2677
+                        ident: 'postcss',
+                        sourceMap: true,
+                        plugins: () => [
+                          require('postcss-flexbugs-fixes'),
+                          autoprefixer({
+                            browsers: [
+                              '>1%',
+                              'last 4 versions',
+                              'Firefox ESR',
+                              'not ie < 9', // React doesn't support IE8 anyway
+                            ],
+                            flexbox: 'no-2009',
+                          }),
+                        ],
+                      },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        outputStyle: 'expanded',
+                        sourceMap: true,
+                        includePaths: [].concat(paths.appSrc),
+                      },
+                    },
+                    ...extraSassLoaders,
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: /\.modules\.scss$/,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        modules: true,
                         minimize: true,
                         sourceMap: true,
                       },

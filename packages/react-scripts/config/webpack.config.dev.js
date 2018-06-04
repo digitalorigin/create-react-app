@@ -35,9 +35,9 @@ if (process.env.SASS_RESOURCES_TO_INJECT) {
   extraSassLoaders.push({
     loader: require.resolve('sass-resources-loader'),
     options: {
-      resources: process.env.SASS_RESOURCES_TO_INJECT
-        .split(' ')
-        .map(sassPath => path.resolve(paths.appPath, sassPath)),
+      resources: process.env.SASS_RESOURCES_TO_INJECT.split(' ').map(sassPath =>
+        path.resolve(paths.appPath, sassPath)
+      ),
     },
   });
 }
@@ -109,9 +109,7 @@ module.exports = {
       // It usually still works on npm 3 without this but it would be
       // unfortunate to rely on, as react-scripts could be symlinked,
       // and thus babel-runtime might not be resolvable from the source.
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
-      ),
+      'babel-runtime': path.dirname(require.resolve('babel-runtime/package.json')),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -152,11 +150,7 @@ module.exports = {
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               baseConfig: {
-                extends: [
-                  require.resolve(
-                    '@digital-origin/eslint-config-digital-origin'
-                  ),
-                ],
+                extends: [require.resolve('@digital-origin/eslint-config-digital-origin')],
               },
               ignore: false,
               useEslintrc: false,
@@ -191,9 +185,7 @@ module.exports = {
             options: {
               // @remove-on-eject-begin
               babelrc: false,
-              presets: [
-                require.resolve('@digital-origin/babel-preset-react-app'),
-              ],
+              presets: [require.resolve('@digital-origin/babel-preset-react-app')],
               // @remove-on-eject-end
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -246,6 +238,50 @@ module.exports = {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  sourceMap: true,
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  outputStyle: 'expanded',
+                  sourceMap: true,
+                  includePaths: [].concat(paths.appSrc),
+                },
+              },
+              ...extraSassLoaders,
+            ],
+          },
+          {
+            test: /\.module\.scss$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[name]_[local]__[hash:base64:5]',
                 },
               },
               {
