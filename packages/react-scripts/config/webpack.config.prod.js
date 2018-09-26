@@ -300,7 +300,7 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           {
-            test: /\.modules\.scss$/,
+            test: /\.module\.scss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
