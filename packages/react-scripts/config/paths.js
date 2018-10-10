@@ -46,6 +46,8 @@ function getServedPath(appPackageJson) {
   return ensureSlash(servedUrl, true);
 }
 
+var doComponentModulesRegex = /node_modules[\\/]@digital-origin[\\/]do-component-/;
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),
@@ -62,6 +64,7 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  doComponentModulesRegex: doComponentModulesRegex,
 };
 
 // @remove-on-eject-begin
@@ -86,6 +89,7 @@ module.exports = {
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
+  doComponentModulesRegex: doComponentModulesRegex,
 };
 
 const ownPackageJson = require('../package.json');
@@ -117,6 +121,7 @@ if (
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
+    doComponentModulesRegex: doComponentModulesRegex,
   };
 }
 // @remove-on-eject-end

@@ -1,24 +1,31 @@
 {
-  "name": "eslint-config-react-app",
-  "version": "3.0.3",
-  "description": "ESLint configuration used by Create React App",
-  "repository": "facebook/create-react-app",
+  "name": "@digital-origin/eslint-config-digital-origin",
+  "version": "3.2.1",
+  "description": "Digital Origin's ESLint config, following our styleguide",
+  "repository": "digitalorigin/create-react-app",
+  "main": "index.js",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/digitalorigin/create-react-app/issues"
   },
-  "files": [
-    "index.js"
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "config",
+    "digitalorigin",
+    "javascript",
+    "styleguide"
   ],
   "peerDependencies": {
     "babel-eslint": "9.x",
     "eslint": "5.x",
-    "eslint-plugin-flowtype": "2.x",
-    "eslint-plugin-import": "2.x",
-    "eslint-plugin-jsx-a11y": "6.x",
-    "eslint-plugin-react": "7.x"
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-config-prettier": "2.8.0",
+    "eslint-plugin-import": "2.8.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-react": "7.4.0"
   },
-  "dependencies": {
-    "confusing-browser-globals": "^1.0.3"
+  "engines": {
+    "node": ">= 4"
   }
 }

@@ -72,7 +72,9 @@ module.exports = function(api, opts, env) {
           // We want Create React App to be IE 9 compatible until React itself
           // no longer works with IE 9
           targets: {
-            ie: 9,
+            ie: 10,
+            ios: 10,
+            android: '4.2',
           },
           // Users cannot override this behavior because this Babel
           // configuration is highly tuned for ES5 support

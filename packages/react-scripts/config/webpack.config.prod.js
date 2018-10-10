@@ -28,7 +28,9 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 // @remove-on-eject-begin
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
-
+const RollbarSourceMapPlugin = require('rollbar-sourcemap-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
 const publicPath = paths.servedPath;
@@ -106,6 +108,48 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
   return loaders;
 };
 
+// Start adding do custom webpack plugins
+const doPlugins = [
+  new webpack.optimize.CommonsChunkPlugin({
+    children: true,
+    minChunks: 2,
+    async: true,
+  }),
+  new webpack.optimize.ModuleConcatenationPlugin(),
+];
+
+// Add rollbar only if react app env is production and we have rollbar token
+if (
+  process.env.ROLLBAR_SERVER_TOKEN &&
+  env.raw.REACT_APP_ENV === 'production'
+) {
+  doPlugins.push(
+    new RollbarSourceMapPlugin({
+      accessToken: process.env.ROLLBAR_SERVER_TOKEN,
+      version: env.raw.VERSION,
+      publicPath: env.raw.PUBLIC_URL,
+    })
+  );
+}
+
+if (process.env.ANALYZER) {
+  doPlugins.push(new BundleAnalyzerPlugin({ defaultSizes: 'gzip' }));
+}
+
+let extraSassLoaders = [];
+if (process.env.SASS_RESOURCES_TO_INJECT) {
+  extraSassLoaders.push({
+    loader: require.resolve('sass-resources-loader'),
+    options: {
+      resources: process.env.SASS_RESOURCES_TO_INJECT
+        .split(' ')
+        .map(sassPath => path.resolve(paths.appPath, sassPath)),
+    },
+  });
+}
+
+// end adding do custom webpack plugins
+
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -115,9 +159,12 @@ module.exports = {
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
-  devtool: shouldUseSourceMap ? 'source-map' : false,
-  // In production, we only want to load the app code.
-  entry: [paths.appIndexJs],
+  devtool:
+    env.raw.REACT_APP_ENV === 'production'
+      ? 'hidden-source-map'
+      : shouldUseSourceMap ? 'source-map' : false,
+  // In production, we only want to load the polyfills and the app code.
+  entry: [require.resolve('./polyfills'), paths.appIndexJs],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -209,8 +256,8 @@ module.exports = {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
-    // https://github.com/facebook/create-react-app/issues/253
-    modules: ['node_modules'].concat(
+    // https://github.com/facebookincubator/create-react-app/issues/253
+    modules: ['node_modules', paths.appNodeModules, paths.appSrc].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -248,10 +295,18 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
-
-      // First, run the linter.
+      // TODO: Disable require.ensure as it's not a standard language feature.
+      // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
+      // { parser: { requireEnsure: false } },
+      // First Comment unneeded marked code with Conditional Loader
+      {
+        test: /\.(js|jsx|mjs)$/,
+        enforce: 'pre',
+        include: [paths.appSrc, paths.doComponentModulesRegex],
+        loader: require.resolve('webpack-conditional-loader'),
+      },
+      // Run the linter.
       // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|mjs|jsx)$/,
@@ -265,8 +320,11 @@ module.exports = {
               // TODO: consider separate config for production,
               // e.g. to enable no-console and no-debugger only in production.
               baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-                settings: { react: { version: '999.999.999' } },
+                extends: [
+                  require.resolve(
+                    '@digital-origin/eslint-config-digital-origin'
+                  ),
+                ],
               },
               ignore: false,
               useEslintrc: false,
@@ -295,9 +353,8 @@ module.exports = {
           // Process application JS with Babel.
           // The preset includes JSX, Flow, and some ESnext features.
           {
-            test: /\.(js|mjs|jsx)$/,
-            include: paths.appSrc,
-
+            test: /\.(js|jsx|mjs)$/,
+            include: [paths.appSrc, paths.doComponentModulesRegex],
             loader: require.resolve('babel-loader'),
             options: {
               customize: require.resolve(
@@ -306,7 +363,9 @@ module.exports = {
               // @remove-on-eject-begin
               babelrc: false,
               configFile: false,
-              presets: [require.resolve('babel-preset-react-app')],
+              presets: [
+                require.resolve('@digital-origin/babel-preset-react-app'),
+              ],
               // Make sure we have a unique cache identifier, erring on the
               // side of caution.
               // We remove this when the user ejects because the default
@@ -434,6 +493,113 @@ module.exports = {
               },
               'sass-loader'
             ),
+
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: /\.module\.scss$/,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        modules: true,
+                        minimize: true,
+                        sourceMap: true,
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: {
+                        // Necessary for external CSS imports to work
+                        // https://github.com/facebookincubator/create-react-app/issues/2677
+                        ident: 'postcss',
+                        sourceMap: true,
+                        plugins: () => [
+                          require('postcss-flexbugs-fixes'),
+                          autoprefixer({
+                            browsers: [
+                              '>1%',
+                              'last 4 versions',
+                              'Firefox ESR',
+                              'not ie < 9', // React doesn't support IE8 anyway
+                            ],
+                            flexbox: 'no-2009',
+                          }),
+                        ],
+                      },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        outputStyle: 'expanded',
+                        sourceMap: true,
+                        includePaths: [].concat(paths.appSrc),
+                      },
+                    },
+                    ...extraSassLoaders,
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: /\.scss$/,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: true,
+                      },
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: {
+                        // Necessary for external CSS imports to work
+                        // https://github.com/facebookincubator/create-react-app/issues/2677
+                        ident: 'postcss',
+                        sourceMap: true,
+                        plugins: () => [
+                          require('postcss-flexbugs-fixes'),
+                          autoprefixer({
+                            browsers: [
+                              '>1%',
+                              'last 4 versions',
+                              'Firefox ESR',
+                              'not ie < 9', // React doesn't support IE8 anyway
+                            ],
+                            flexbox: 'no-2009',
+                          }),
+                        ],
+                      },
+                    },
+                    {
+                      loader: require.resolve('sass-loader'),
+                      options: {
+                        outputStyle: 'expanded',
+                        sourceMap: true,
+                        includePaths: [].concat(paths.appSrc),
+                      },
+                    },
+                    ...extraSassLoaders,
+                  ],
+                },
+                extractTextPluginOptions
+              )
+            ),
+            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.
@@ -457,6 +623,13 @@ module.exports = {
     ],
   },
   plugins: [
+    ...doPlugins,
+    // Makes some environment variables available in index.html.
+    // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
+    // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    // In production, it will be an empty string unless you specify "homepage"
+    // in `package.json`, in which case it will be the pathname of that URL.
+    new InterpolateHtmlPlugin(env.raw),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -473,6 +646,8 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
+      insertRollbar: false,
+      insertNewrelic: false,
     }),
     // Inlines the webpack runtime script. This script is too small to warrant
     // a network request.
@@ -491,11 +666,31 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: 'static/css/[name].[contenthash:8].css',
-      chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+    // Minify the code.
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        // Disabled because of an issue with Uglify breaking seemingly valid code:
+        // https://github.com/facebookincubator/create-react-app/issues/2376
+        // Pending further investigation:
+        // https://github.com/mishoo/UglifyJS2/issues/2011
+        comparisons: false,
+      },
+      mangle: {
+        safari10: true,
+      },
+      output: {
+        comments: false,
+        // Turned on because emoji and regex is not minified properly using default
+        // https://github.com/facebookincubator/create-react-app/issues/2488
+        ascii_only: true,
+      },
+      sourceMap: shouldUseSourceMap,
+    }),
+    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
+    new ExtractTextPlugin({
+      filename: cssFilename,
+      allChunks: true,
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without

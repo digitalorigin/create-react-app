@@ -41,7 +41,8 @@ module.exports = (resolve, rootDir, isEjecting) => {
       '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
       '<rootDir>/src/**/?(*.)(spec|test).{js,jsx}',
     ],
-    testEnvironment: 'jsdom',
+    moduleDirectories: [paths.appNodeModules, paths.appSrc],
+    testEnvironment: 'jsdom', // TODO MARTA it was node
     testURL: 'http://localhost',
     transform: {
       '^.+\\.(js|jsx)$': isEjecting

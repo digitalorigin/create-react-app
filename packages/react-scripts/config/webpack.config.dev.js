@@ -76,6 +76,18 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
   return loaders;
 };
 
+let extraSassLoaders = [];
+if (process.env.SASS_RESOURCES_TO_INJECT) {
+  extraSassLoaders.push({
+    loader: require.resolve('sass-resources-loader'),
+    options: {
+      resources: process.env.SASS_RESOURCES_TO_INJECT.split(' ').map(sassPath =>
+        path.resolve(paths.appPath, sassPath)
+      ),
+    },
+  });
+}
+
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
@@ -135,8 +147,8 @@ module.exports = {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
-    // https://github.com/facebook/create-react-app/issues/253
-    modules: ['node_modules'].concat(
+    // https://github.com/facebookincubator/create-react-app/issues/253
+    modules: ['node_modules', paths.appNodeModules, paths.appSrc].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -148,6 +160,13 @@ module.exports = {
     // for React Native Web.
     extensions: ['.mjs', '.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
+      // @remove-on-eject-begin
+      // Resolve Babel runtime relative to react-scripts.
+      // It usually still works on npm 3 without this but it would be
+      // unfortunate to rely on, as react-scripts could be symlinked,
+      // and thus babel-runtime might not be resolvable from the source.
+      'babel-runtime': path.dirname(require.resolve('babel-runtime/package.json')),
+      // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -174,10 +193,19 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      // Disable require.ensure as it's not a standard language feature.
       { parser: { requireEnsure: false } },
-
-      // First, run the linter.
+      // TODO: Disable require.ensure as it's not a standard language feature.
+      // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
+      // { parser: { requireEnsure: false } },
+      // Process JS with Conditional Loader.
+      // First Comment unneeded marked code with Conditional Loader
+      {
+        test: /\.(js|jsx|mjs)$/,
+        enforce: 'pre',
+        include: [paths.appSrc, paths.doComponentModulesRegex],
+        loader: require.resolve('webpack-conditional-loader'),
+      },
+      // Run the linter.
       // It's important to do this before Babel processes the JS.
       {
         test: /\.(js|mjs|jsx)$/,
@@ -189,8 +217,7 @@ module.exports = {
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-                settings: { react: { version: '999.999.999' } },
+                extends: [require.resolve('@digital-origin/eslint-config-digital-origin')],
               },
               ignore: false,
               useEslintrc: false,
@@ -220,8 +247,8 @@ module.exports = {
           // Process application JS with Babel.
           // The preset includes JSX, Flow, and some ESnext features.
           {
-            test: /\.(js|mjs|jsx)$/,
-            include: paths.appSrc,
+            test: /\.(js|jsx|mjs)$/,
+            include: [paths.appSrc, paths.doComponentModulesRegex],
             loader: require.resolve('babel-loader'),
             options: {
               customize: require.resolve(
@@ -230,7 +257,7 @@ module.exports = {
               // @remove-on-eject-begin
               babelrc: false,
               configFile: false,
-              presets: [require.resolve('babel-preset-react-app')],
+              presets: [require.resolve('@digital-origin/babel-preset-react-app')],
               // Make sure we have a unique cache identifier, erring on the
               // side of caution.
               // We remove this when the user ejects because the default
@@ -343,6 +370,92 @@ module.exports = {
               'sass-loader'
             ),
           },
+          {
+            test: /\.module\.scss$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[name]_[local]__[hash:base64:5]',
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  sourceMap: true,
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  outputStyle: 'expanded',
+                  sourceMap: true,
+                  includePaths: [].concat(paths.appSrc),
+                },
+              },
+              ...extraSassLoaders,
+            ],
+          },
+          {
+            test: /\.scss$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  sourceMap: true,
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+              {
+                loader: require.resolve('sass-loader'),
+                options: {
+                  outputStyle: 'expanded',
+                  sourceMap: true,
+                  includePaths: [].concat(paths.appSrc),
+                },
+              },
+              ...extraSassLoaders,
+            ],
+          },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
           // In production, they would get copied to the `build` folder.
@@ -370,6 +483,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      insertRollbar: false,
+      insertNewrelic: false,
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

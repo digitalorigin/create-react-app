@@ -1,4 +1,23 @@
-# Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app)
+# This a Create React App fork
+
+If you do a major version of this project open an issue to projects using it and provide instructions on how to do the upgrade
+
+Extra environments added:
+
+| env | useful for |
+| ------------- | ----------- |
+| NEW_RELIC_APPLICATION_ID | New Relic application id |
+| ROLLBAR_CLIENT_TOKEN | Rollbar application id |
+| GTM_ID | Google Tag Manager container Id |
+| GTM_AUTH | Google Tag Manager authorization token (useful form multiple environments in GTM) |
+| GTM_PREVIEW | Google Tag Manager env preview (useful form multiple environments in GTM) |
+| SASS_RESOURCES_TO_INJECT | Path/s File/s from app directory where to find sass resources to inject in every sass file (```./src/my/resource._scss ./src/my/other/resource.scss ```) |
+
+Now up next the original Create React App readme
+
+---
+
+# Create React App [![Build Status](https://travis-ci.org/facebookincubator/create-react-app.svg?branch=master)](https://travis-ci.org/facebookincubator/create-react-app)
 
 Create React apps with no build configuration.
 
