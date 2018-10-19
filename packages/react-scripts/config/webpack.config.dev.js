@@ -35,8 +35,13 @@ if (process.env.SASS_RESOURCES_TO_INJECT) {
   extraSassLoaders.push({
     loader: require.resolve('sass-resources-loader'),
     options: {
-      resources: process.env.SASS_RESOURCES_TO_INJECT.split(' ').map(sassPath =>
-        path.resolve(paths.appPath, sassPath)
+      resources: process.env.SASS_RESOURCES_TO_INJECT.split(' ').map(
+        sassPath => {
+          path.resolve(paths.appPath, sassPath);
+          console.log(
+            'SASS_RESOURCES_TO_INJECT :' + path.resolve(paths.appPath, sassPath)
+          );
+        }
       ),
     },
   });
@@ -109,7 +114,9 @@ module.exports = {
       // It usually still works on npm 3 without this but it would be
       // unfortunate to rely on, as react-scripts could be symlinked,
       // and thus babel-runtime might not be resolvable from the source.
-      'babel-runtime': path.dirname(require.resolve('babel-runtime/package.json')),
+      'babel-runtime': path.dirname(
+        require.resolve('babel-runtime/package.json')
+      ),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -150,7 +157,11 @@ module.exports = {
               eslintPath: require.resolve('eslint'),
               // @remove-on-eject-begin
               baseConfig: {
-                extends: [require.resolve('@digital-origin/eslint-config-digital-origin')],
+                extends: [
+                  require.resolve(
+                    '@digital-origin/eslint-config-digital-origin'
+                  ),
+                ],
               },
               ignore: false,
               useEslintrc: false,
@@ -185,7 +196,9 @@ module.exports = {
             options: {
               // @remove-on-eject-begin
               babelrc: false,
-              presets: [require.resolve('@digital-origin/babel-preset-react-app')],
+              presets: [
+                require.resolve('@digital-origin/babel-preset-react-app'),
+              ],
               // @remove-on-eject-end
               // This is a feature of `babel-loader` for webpack (not Babel itself).
               // It enables caching results in ./node_modules/.cache/babel-loader/
