@@ -1,9 +1,8 @@
 {
   "name": "@digital-origin/eslint-config-digital-origin",
-  "version": "3.2.1",
+  "version": "4.0.1",
   "description": "Digital Origin's ESLint config, following our styleguide",
   "repository": "digitalorigin/create-react-app",
-  "main": "index.js",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/digitalorigin/create-react-app/issues"
@@ -17,15 +16,12 @@
     "styleguide"
   ],
   "peerDependencies": {
-    "babel-eslint": "7.2.3",
-    "eslint": "4.10.0",
-    "eslint-config-airbnb": "16.1.0",
-    "eslint-config-prettier": "2.8.0",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jsx-a11y": "6.0.2",
-    "eslint-plugin-react": "7.4.0"
-  },
-  "engines": {
-    "node": ">= 4"
+    "babel-eslint": "9.x",
+    "eslint": "5.x",
+    "eslint-config-airbnb": "17.x",
+    "eslint-config-prettier": "3.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-react": "7.x"
   }
 }
