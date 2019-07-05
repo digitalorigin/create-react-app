@@ -51,5 +51,6 @@
   },
   "dependencies": {
     "git-rev-sync": "^1.9.1"
-  }
+  },
+  "version": "5.0.0-alpha.1"
 }
