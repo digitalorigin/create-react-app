@@ -384,7 +384,9 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: {
                   extends: [
-                    require.resolve('@digital-origin/eslint-config-react-app'),
+                    require.resolve(
+                      '@digital-origin/eslint-config-digital-origin'
+                    ),
                   ], // PG
                 },
                 ignore: false,
