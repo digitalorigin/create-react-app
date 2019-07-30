@@ -147,7 +147,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
-    'react/react-destructuring-assignment': 'warn',
+    'react/destructuring-assignment': 'warn',
 
     // Accessibility rules (used inside airbnb plugin)
     'jsx-a11y/anchor-is-valid': 'off',
