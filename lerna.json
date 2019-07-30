@@ -1,6 +1,7 @@
 {
   "lerna": "2.6.0",
-  "npmClient": "npm",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
   "version": "independent",
   "changelog": {
     "repo": "facebook/create-react-app",
@@ -14,10 +15,5 @@
       "tag: underlying tools": ":hammer: Underlying Tools"
     },
     "cacheDir": ".changelog"
-  },
-  "packages": [
-    "packages/react-scripts",
-    "packages/babel-preset-react-app",
-    "packages/eslint-config-react-app"
-  ]
+  }
 }
