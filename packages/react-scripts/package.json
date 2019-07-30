@@ -85,6 +85,7 @@
     "url-loader": "1.1.2",
     "webpack": "4.35.0",
     "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-conditional-loader": "^1.0.12",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.0.4",
     "workbox-webpack-plugin": "4.2.0"
@@ -110,5 +111,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "gitHead": "58b08c59b0705731f73a9dddae7992a479165fc1"
 }
