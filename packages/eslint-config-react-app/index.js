@@ -147,6 +147,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
+    'react/react-destructuring-assignment': 'warn',
 
     // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
     'react-hooks/rules-of-hooks': 'error',
