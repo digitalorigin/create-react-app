@@ -149,6 +149,9 @@ module.exports = {
     'react/style-prop-object': 'warn',
     'react/react-destructuring-assignment': 'warn',
 
+    // Accessibility rules (used inside airbnb plugin)
+    'jsx-a11y/anchor-is-valid': 'off',
+
     // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/no-exhaustive-deps': 'off',
