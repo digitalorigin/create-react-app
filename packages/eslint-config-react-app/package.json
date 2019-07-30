@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/eslint-config-digital-origin",
-  "version": "5.0.1-alpha.5",
+  "version": "5.0.1-alpha.6",
   "description": "Digital Origin's ESLint config, following our styleguide",
   "repository": {
     "type": "git",

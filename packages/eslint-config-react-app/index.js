@@ -148,9 +148,12 @@ module.exports = {
     'react/require-render-return': 'error',
     'react/style-prop-object': 'warn',
     'react/destructuring-assignment': 'warn',
+    'react/default-props-match-prop-types': 'warn',
 
     // Accessibility rules (used inside airbnb plugin)
     'jsx-a11y/anchor-is-valid': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/label-has-for': 'off',
 
     // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
     'react-hooks/rules-of-hooks': 'error',
