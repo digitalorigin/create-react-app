@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/react-scripts",
-  "version": "5.0.1-alpha.1",
+  "version": "5.0.1-alpha.2",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/core": "7.4.3",
     "@digital-origin/babel-preset-react-app": "^9.0.0",
-    "@digital-origin/eslint-config-digital-origin": "^5.0.1-alpha.0",
+    "@digital-origin/eslint-config-digital-origin": "^5.0.1-alpha.1",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",
@@ -73,7 +73,7 @@
     "postcss-safe-parser": "4.0.1",
     "prettier": "1.18.2",
     "react-app-polyfill": "^1.0.1",
-    "react-dev-utils": "^9.0.2-alpha.0",
+    "react-dev-utils": "^9.0.1",
     "resolve": "1.10.0",
     "rollbar-sourcemap-webpack-plugin": "^2.5.1",
     "sass-loader": "7.1.0",
