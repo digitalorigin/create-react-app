@@ -95,7 +95,7 @@ module.exports = {
     // http://eslint.org/docs/rules/
     'comma-dangle': [2, 'always-multiline'],
     'no-console': 0,
-    'react/prop-types': 1,
+    'react/prop-types': 2,
     'react/forbid-prop-types': 0,
     'react/require-default-props': 0,
     'import/no-named-as-default': 0,
@@ -122,33 +122,33 @@ module.exports = {
     'no-useless-escape': 0,
 
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
-    'react/forbid-foreign-prop-types': ['warn', { allowInPropTypes: true }],
-    'react/jsx-no-comment-textnodes': 'warn',
-    'react/jsx-no-duplicate-props': ['warn', { ignoreCase: true }],
+    'react/forbid-foreign-prop-types': ['error', { allowInPropTypes: true }],
+    'react/jsx-no-comment-textnodes': 'error',
+    'react/jsx-no-duplicate-props': ['error', { ignoreCase: true }],
     'react/jsx-no-target-blank': 'off',
     'react/jsx-no-undef': 'error',
     'react/jsx-pascal-case': [
-      'warn',
+      'error',
       {
         allowAllCaps: true,
         ignore: [],
       },
     ],
-    'react/jsx-uses-react': 'warn',
-    'react/jsx-uses-vars': 'warn',
-    'react/no-danger-with-children': 'warn',
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
+    'react/no-danger-with-children': 'error',
     // Disabled because of undesirable warnings
     // See https://github.com/facebook/create-react-app/issues/5204 for
     // blockers until its re-enabled
     // 'react/no-deprecated': 'warn',
-    'react/no-direct-mutation-state': 'warn',
-    'react/no-is-mounted': 'warn',
+    'react/no-direct-mutation-state': 'error',
+    'react/no-is-mounted': 'error',
     'react/no-typos': 'error',
     'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'error',
-    'react/style-prop-object': 'warn',
-    'react/destructuring-assignment': 'warn',
-    'react/default-props-match-prop-types': 'warn',
+    'react/style-prop-object': 'error',
+    'react/destructuring-assignment': 'error',
+    'react/default-props-match-prop-types': 'error',
 
     // Accessibility rules (used inside airbnb plugin)
     'jsx-a11y/anchor-is-valid': 'off',
