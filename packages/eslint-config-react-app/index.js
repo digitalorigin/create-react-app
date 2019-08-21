@@ -93,7 +93,10 @@ module.exports = {
   // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
   rules: {
     // http://eslint.org/docs/rules/
-    camelcase: ['error', { allow: ['^UNSAFE_'] }],
+    camelcase: [
+      'error',
+      { allow: ['^UNSAFE_'], ignoreDestructuring: true, properties: 'never' },
+    ],
     'comma-dangle': [2, 'always-multiline'],
     'no-console': 0,
     'react/prop-types': 2,
