@@ -93,6 +93,7 @@ module.exports = {
   // `typescript-eslint`, as some rules such as `no-array-constructor` aren't compatible.
   rules: {
     // http://eslint.org/docs/rules/
+    camelcase: ['error', { allow: ['^UNSAFE_'] }],
     'comma-dangle': [2, 'always-multiline'],
     'no-console': 0,
     'react/prop-types': 2,
@@ -134,6 +135,7 @@ module.exports = {
         ignore: [],
       },
     ],
+    'react/jsx-props-no-spreading': 'off',
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'react/no-danger-with-children': 'error',
@@ -154,6 +156,7 @@ module.exports = {
     'jsx-a11y/anchor-is-valid': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'jsx-a11y/label-has-for': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
 
     // https://github.com/facebook/react/tree/master/packages/eslint-plugin-react-hooks
     'react-hooks/rules-of-hooks': 'error',
