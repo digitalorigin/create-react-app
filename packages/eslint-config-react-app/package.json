@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/eslint-config-digital-origin",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "description": "Digital Origin's ESLint config, following our styleguide",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "@typescript-eslint/eslint-plugin": "1.x",
     "@typescript-eslint/parser": "1.x",
     "babel-eslint": "10.x",
-    "eslint": "6.x",
+    "eslint": "5.x",
     "eslint-config-airbnb": "18.x",
     "eslint-config-prettier": "3.x",
     "eslint-plugin-import": "2.x",
