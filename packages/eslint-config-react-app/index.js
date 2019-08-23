@@ -112,6 +112,7 @@ module.exports = {
     'no-plusplus': 0,
     'import/first': 0,
     'global-require': 0,
+    'react/jsx-curly-newline': 0,
     'react/jsx-curly-spacing': 0,
     'react/jsx-indent-props': 0,
     'react/jsx-closing-bracket-location': 0,
