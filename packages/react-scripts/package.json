@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/react-scripts",
-  "version": "5.0.8",
+  "version": "5.0.9",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/core": "7.4.3",
     "@digital-origin/babel-preset-react-app": "^9.0.0",
-    "@digital-origin/eslint-config-digital-origin": "^5.0.8",
+    "@digital-origin/eslint-config-digital-origin": "^5.0.9",
     "@svgr/webpack": "4.2.0",
     "@typescript-eslint/eslint-plugin": "1.10.2",
     "@typescript-eslint/parser": "1.10.2",
