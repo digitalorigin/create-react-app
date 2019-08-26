@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/eslint-config-digital-origin",
-  "version": "5.0.9",
+  "version": "5.0.10",
   "description": "Digital Origin's ESLint config, following our styleguide",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "@typescript-eslint/eslint-plugin": "1.x",
     "@typescript-eslint/parser": "1.x",
     "babel-eslint": "10.x",
-    "eslint": "5.x",
+    "eslint": "6.x",
     "eslint-config-airbnb": "18.x",
     "eslint-config-prettier": "3.x",
     "eslint-plugin-import": "2.x",
@@ -32,7 +32,7 @@
     "eslint-plugin-react-hooks": "1.x"
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.7"
+    "confusing-browser-globals": "^1.0.8"
   },
   "gitHead": "58b08c59b0705731f73a9dddae7992a479165fc1"
 }
