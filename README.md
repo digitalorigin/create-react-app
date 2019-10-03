@@ -6,6 +6,7 @@ Extra environments added:
 
 | env | useful for |
 | ------------- | ----------- |
+| DATADOG_CLIENT_TOKEN | Datadog auth token |
 | NEW_RELIC_APPLICATION_ID | New Relic application id |
 | ROLLBAR_CLIENT_TOKEN | Rollbar application id |
 | GTM_ID | Google Tag Manager container Id |

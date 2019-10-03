@@ -1,0 +1,14 @@
+<script type="text/javascript" src="https://www.datadoghq-browser-agent.com/datadog-logs-us.js"></script>
+
+<script type="text/javascript">
+   if (window.DD_LOGS) {
+     DD_LOGS.init({
+       clientToken: "${process.env.DATADOG_CLIENT_TOKEN}",
+       forwardErrorsToLogs: false,
+     });
+     DD_LOGS.addLoggerGlobalContext("version", "${process.env.VERSION}");
+     DD_LOGS.addLoggerGlobalContext("owner", "${process.env.REACT_APP_OWNER}");
+     DD_LOGS.addLoggerGlobalContext("locale", "${process.env.REACT_APP_LANGUAGE}");
+     DD_LOGS.addLoggerGlobalContext("env", "${process.env.REACT_APP_ENV}");
+   }
+</script>
