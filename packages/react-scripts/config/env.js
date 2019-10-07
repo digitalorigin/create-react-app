@@ -108,6 +108,7 @@ function getClientEnvironment(publicUrl) {
         // images into the `src` and `import` them in code to get their paths.
         REACT_APP_ENV: process.env.NODE_ENV || 'development', // default value same as node env
         PUBLIC_URL: publicUrl,
+        DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN,
         NEW_RELIC_APPLICATION_ID: process.env.NEW_RELIC_APPLICATION_ID,
         ROLLBAR_CLIENT_TOKEN: process.env.ROLLBAR_CLIENT_TOKEN,
         GTM_ID: process.env.GTM_ID,
