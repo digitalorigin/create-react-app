@@ -29,8 +29,8 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "7.6.4",
-    "@digital-origin/babel-preset-react-app": "^9.0.0",
-    "@digital-origin/eslint-config-digital-origin": "^5.0.10",
+    "@digital-origin/babel-preset-react-app": "^9.0.0-alpha.2",
+    "@digital-origin/eslint-config-digital-origin": "^5.0.10-alpha.1",
     "@svgr/webpack": "4.3.3",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
