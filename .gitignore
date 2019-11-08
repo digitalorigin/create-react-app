@@ -14,3 +14,4 @@ yarn.lock
 /.changelog
 package-lock.json
 .npm/
+yarn.lock
