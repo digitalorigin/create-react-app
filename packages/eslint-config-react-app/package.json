@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/eslint-config-digital-origin",
-  "version": "5.0.10-alpha.0",
+  "version": "5.0.10-alpha.1",
   "description": "Digital Origin's ESLint config, following our styleguide",
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
     "eslint-plugin-react-hooks": "1.x"
   },
   "dependencies": {
-    "confusing-browser-globals": "^1.0.8"
+    "confusing-browser-globals": "^1.0.10-alpha.0"
   },
   "gitHead": "58b08c59b0705731f73a9dddae7992a479165fc1"
 }

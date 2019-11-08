@@ -1,6 +1,6 @@
 {
   "name": "@digital-origin/react-scripts",
-  "version": "5.2.0-alpha.0",
+  "version": "5.2.0-alpha.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
-    "babel-plugin-named-asset-import": "^0.3.4",
+    "babel-plugin-named-asset-import": "^0.3.5-alpha.0",
     "babel-preset-react-app": "^9.0.2",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
@@ -74,7 +74,7 @@
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
     "prettier": "1.18.2",
-    "react-app-polyfill": "^1.0.4",
+    "react-app-polyfill": "^1.0.5-alpha.0",
     "react-dev-utils": "^9.1.0",
     "resolve": "1.12.0",
     "resolve-url-loader": "3.1.0",
