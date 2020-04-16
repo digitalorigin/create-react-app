@@ -543,7 +543,6 @@ module.exports = {
         minifyURLs: true,
       },
       insertRollbar: false,
-      insertNewrelic: false,
     }),
     // Inlines the webpack runtime script. This script is too small to warrant
     // a network request.

@@ -407,7 +407,6 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
       insertRollbar: false,
-      insertNewrelic: false,
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
